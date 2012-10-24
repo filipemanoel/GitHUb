@@ -1,15 +1,14 @@
-// JavaScript Document
 var conta = "685-066-9527"; /*ID da Conta */
 var conta_nome = "Sonar"; /*Nome da Conta*/
-var tipo_relatorio = 'personalizado';/*Tipo do relatório a ser executado (personalizado , diario)*/
+var tipo_relatorio = 'diario';/*Tipo do relatório a ser executado (personalizado , diario)*/
 var data_relatorio = '20121022';/* Data usada para relatório personalizado no formato AAAAMMDD */
-var sheet = 'Dados';/*Nome da Planilha onde será armazenada as informações*/
+var sheet = 'Dados Adwords';/*Nome da Planilha onde será armazenada as informações*/
 function main() {
 
 var Tabela = SpreadsheetApp.openById("0ApANcqZt8kI6dEFVUzI1Z1RYcGxvSzZGa2UxX3VNdFE");
 var Planilha = Tabela.getSheetByName(sheet);
-var search = get_dados('search');
-var display =get_dados('display'); 
+var search =  get_dados('search');
+var display = get_dados('display'); 
 
 Planilha.appendRow([
   get_data() ,
@@ -56,7 +55,7 @@ posicao_media: 0
       Dados.conversao += stats.getConversions();
       Dados.posicao_media += stats.getAveragePosition()*stats.getImpressions();
     }
-    Dados.posicao_media = round(Dados.posicao_media/Dados.impressoes*100)/100;
+    Dados.posicao_media = Math.round(Dados.posicao_media/Dados.impressoes*100)/100;
   }
   else{
     var campaignIterator = AdWordsApp.campaigns()
@@ -73,8 +72,8 @@ posicao_media: 0
       Dados.posicao_media += stats.getAveragePosition()*stats.getImpressions();
     }
     Dados.posicao_media = Math.round(Dados.posicao_media/Dados.impressoes*100)/100;
-    return Dados;
   }
+      return Dados;
 }
 
 function get_data(){
